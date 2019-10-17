@@ -1,2 +1,18 @@
 <h1>All Tasks</h1>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col"><%= Task.human_attribute_name(:name) %></th>
+    <th scope="col"><%= Task.human_attribute_name(:created_at) %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @tasks.each do |task| %>
+    <tr>
+      <td><%= task.name %></td>
+      <td><%= task.created_at %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 <%= link_to 'Create task', new_task_path, class: 'btn btn-primary' %>

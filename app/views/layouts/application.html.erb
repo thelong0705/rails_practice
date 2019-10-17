@@ -13,7 +13,10 @@
 <nav class="navbar navbar-light bg-light">
   <%= link_to 'Homepage', root_path %>
 </nav>
-<div class="container">
+<div class="container mt-3">
+  <% if flash.notice.present? %>
+    <div class="alert alert-success"><%= flash.notice %></div>
+  <% end %>
   <%= yield %>
 </div>
 </body>
