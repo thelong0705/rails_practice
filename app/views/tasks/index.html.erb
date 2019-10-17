@@ -4,6 +4,7 @@
   <tr>
     <th scope="col"><%= Task.human_attribute_name(:name) %></th>
     <th scope="col"><%= Task.human_attribute_name(:created_at) %></th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -13,6 +14,9 @@
         <%= link_to task.name, task %>
       </td>
       <td><%= task.created_at %></td>
+      <td>
+        <%= link_to 'Edit', edit_task_path(task) %>
+      </td>
     </tr>
   <% end %>
   </tbody>
