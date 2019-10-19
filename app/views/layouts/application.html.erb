@@ -12,6 +12,15 @@
 <body>
 <nav class="navbar navbar-light bg-light">
   <%= link_to 'Homepage', root_path %>
+  <div>
+    <% if current_user %>
+      <%= link_to 'Logout', logout_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Login', login_path %>
+    <% end %>
+  </div>
+
+
 </nav>
 <div class="container mt-3">
   <% if flash.notice.present? %>

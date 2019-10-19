@@ -14,6 +14,11 @@ class SessionController < ApplicationController
     end
   end
 
+  def destroy
+    reset_session
+    redirect_to root_path, notice: 'Logged out'
+  end
+
   def session_params
     params.require(:session).permit(:email, :password)
   end
