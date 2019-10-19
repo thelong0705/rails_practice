@@ -15,7 +15,9 @@
   <div>
     <% if current_user %>
       <%= link_to 'Tasks list', tasks_path %>
-      <%= link_to 'User profile', admin_user_path(current_user) %>
+      <% if current_user.admin? %>
+        <%= link_to 'User profile', admin_users_path %>
+      <% end %>
       <%= link_to 'Logout', logout_path, method: :delete %>
     <% else %>
       <%= link_to 'Login', login_path %>
