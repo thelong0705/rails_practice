@@ -8,20 +8,20 @@ describe 'CRUD tasks', type: :system do
   let!(:task_a) { FactoryBot.create(:task, name: 'first task', user: user_a) }
 
   before do
-    # FactoryBot.create(:task, name: 'first task', user: user_a)
     visit login_path
     fill_in 'Email', with: login_user.email
     fill_in 'Password', with: login_user.password
     click_button 'login'
   end
 
+  shared_examples_for 'show created task of user A' do
+    it { expect(page).to have_content 'first task' }
+  end
+
   describe 'show all tasks' do
     context 'when user A login' do
       let(:login_user) { user_a }
-
-      it 'show all tasks that user A created' do
-        expect(page).to have_content 'first task'
-      end
+      it_behaves_like 'show created task of user A'
     end
 
     context 'when user B login' do
@@ -40,8 +40,34 @@ describe 'CRUD tasks', type: :system do
         visit task_path(task_a)
       end
 
-      it 'show task detail' do
-        expect(page).to have_content 'first task'
+      it_behaves_like 'show created task of user A'
+    end
+  end
+
+  describe 'create new task' do
+    let(:login_user) { user_a }
+
+    before do
+      visit new_task_path
+      fill_in 'Name', with: task_name
+      click_button 'Create Task'
+    end
+
+    context 'enter name when create task' do
+      let(:task_name) { 'task name' }
+
+      it 'will create task' do
+        expect(page).to have_selector '.alert-success', text: 'task name'
+      end
+    end
+
+    context 'not enter name when create task' do
+      let(:task_name) { '' }
+
+      it 'will not create task' do
+        within '#error_explanation' do
+          expect(page).to have_content "Name can't be blank"
+        end
       end
     end
   end
